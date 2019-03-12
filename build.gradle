@@ -33,5 +33,18 @@ dockerRun {
 	name "${bootJar.baseName}-container"
 	image "${project.group}/${bootJar.baseName}"
 	//volumes '/tmp':'/tmp'
-	ports '5000:8080'
+	ports   '5000:8080',
+			'5005:5005',
+			'1898:1898'
+	command "java",
+			"-Xdebug",
+			"-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005",
+			"-Dcom.sun.management.jmxremote.port=1898",
+			"-Dcom.sun.management.jmxremote.rmi.port=1898",
+			"-Dcom.sun.management.jmxremote.ssl=false",
+			"-Dcom.sun.management.jmxremote.authenticate=false",
+			"-Djava.rmi.server.hostname=127.0.0.1",
+			"-Djava.security.egd=file:/dev/./urandom",
+			"-jar",
+			"/app.jar"
 }
