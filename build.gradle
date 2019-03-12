@@ -35,8 +35,10 @@ dockerRun {
 	//volumes '/tmp':'/tmp'
 	ports   '5000:8080',
 			'5005:5005',
-			'1898:1898'
+			'1898:1898',
+			'16000:16000'
 	command "java",
+			"-agentpath:/usr/local/jprofiler10.1.5/bin/linux-x64/libjprofilerti.so=port=16000,nowait",
 			"-Xdebug",
 			"-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005",
 			"-Dcom.sun.management.jmxremote.port=1898",
